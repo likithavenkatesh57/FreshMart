@@ -1,0 +1,16 @@
+{
+  "name": "cust-retail-freshmart",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Hypothetical customer environment for VendriftAI business-context testing: FreshMart (Supermarket / Retail chain).",
+  "scripts": {
+    "check": "node scripts/check-syntax.js",
+    "test": "node --test tests/"
+  },
+  "dependencies": {
+    "aws-sdk": "2.1693.0",
+    "axios": "1.6.8",
+    "stripe": "14.0.0",
+    "twilio": "3.84.1"
+  }
+}
