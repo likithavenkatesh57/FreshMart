@@ -1,0 +1,28 @@
+name: VendriftAI
+# Manual runs and /vendriftai comments only. No schedule on purpose.
+on:
+  workflow_dispatch:
+  issue_comment:
+    types: [created]
+
+jobs:
+  vendriftai:
+    if: >-
+      github.event_name != 'issue_comment' ||
+      startsWith(github.event.comment.body, '/vendriftai')
+    runs-on: ubuntu-latest
+    concurrency:
+      group: vendriftai
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      checks: read
+      statuses: read
+      actions: read
+    steps:
+      - uses: svudgimath/vendriftai-action@aaa76be40717ad58ad53f603ef124930d0dbdbda  # pinned: v1.1.0, same version for all 10 customers
+        with:
+          anthropic-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
+          token: ${{ secrets.VENDRIFTAI_PAT }}
