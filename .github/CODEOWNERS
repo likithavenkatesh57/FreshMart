@@ -1,0 +1,6 @@
+# Who owns what. Team handles are placeholders for this test.
+/src/online-store/syncInventoryToShopify.js @freshmart/e-commerce-platform
+/src/shipping/trackParcel.js @freshmart/e-commerce-platform
+/src/delivery/deliveryFee.js @freshmart/delivery-tech
+/src/stores/inventorySync.js @freshmart/store-systems
+/src/stores/storeAlert.js @freshmart/store-systems
