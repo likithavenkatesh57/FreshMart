@@ -1,0 +1,41 @@
+# PROPOSED business-context file. VendriftAI does not read this today (OUTSTANDING).
+# It stays in the customer's own repo, so no business data leaves the customer.
+customer:
+  name: "FreshMart"
+  sector: "Supermarket / Retail chain"
+  scale: "Large: 400 stores, about 9% of revenue online"
+  business_model: "400-store supermarket chain; online store on Shopify; ships non-perishables by USPS; delivers groceries locally"
+services:
+  - name: "Store-to-Shopify inventory sync"
+    paths: ["src/online-store/syncInventoryToShopify.js"]
+    environment: production
+    business_criticality: high
+    owner: "E-commerce Platform"
+  - name: "Parcel tracking for online orders"
+    paths: ["src/shipping/trackParcel.js"]
+    environment: production
+    business_criticality: critical
+    owner: "E-commerce Platform"
+  - name: "Grocery delivery fee by distance"
+    paths: ["src/delivery/deliveryFee.js"]
+    environment: production
+    business_criticality: medium
+    owner: "Delivery Tech"
+  - name: "Store-to-HQ inventory sync"
+    paths: ["src/stores/inventorySync.js"]
+    environment: production
+    business_criticality: critical
+    owner: "Store Systems"
+  - name: "Store systems alerts to Teams"
+    paths: ["src/stores/storeAlert.js"]
+    environment: production
+    business_criticality: medium
+    owner: "Store Systems"
+change_freezes:
+  - from: 2026-11-25
+    to: 2027-01-05
+    reason: "Holiday peak code freeze"
+integrations:
+  erp:
+    enabled: false   # opt-in only; off by default (OUTSTANDING feature)
+    system: "SAP S/4HANA Retail"
