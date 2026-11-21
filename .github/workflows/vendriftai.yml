@@ -22,7 +22,7 @@ jobs:
       statuses: read
       actions: read
     steps:
-      - uses: svudgimath/vendriftai-action@v1
+      - uses: svudgimath/vendriftai-action@aaa76be40717ad58ad53f603ef124930d0dbdbda
         with:
           anthropic-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
           token: ${{ secrets.VENDRIFTAI_PAT }}
