@@ -12,5 +12,8 @@
     "axios": "1.6.8",
     "stripe": "14.0.0",
     "twilio": "3.84.1"
+  },
+  "devDependencies": {
+    "@types/node": "20.17.58"
   }
 }
