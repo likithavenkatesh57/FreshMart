@@ -1,6 +1,0 @@
-# Who owns what. Team handles are placeholders for this test.
-/src/online-grocery/checkoutCharge.js @freshmart/e-commerce-payments
-/src/delivery/deliveryEtaSms.js @freshmart/delivery-tech
-/src/stores/inventorySync.js @freshmart/store-systems--supply-chain-it
-/src/stores/priceFileUpload.js @freshmart/store-systems--supply-chain-it
-/src/marketing/weeklyFlyer.js @freshmart/crm--marketing-tech
