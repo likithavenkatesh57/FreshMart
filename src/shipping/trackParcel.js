@@ -2,13 +2,35 @@
 // Owning team: E-commerce Platform
 const axios = require('axios');
 
-const USPS_URL = 'https://secure.shippingapis.com/ShippingAPI.dll';
+const USPS_API_BASE = 'https://apis.usps.com';
+
+let cachedToken = null;
+let cachedTokenExpiry = 0;
+
+async function getAccessToken() {
+  if (cachedToken && Date.now() < cachedTokenExpiry) {
+    return cachedToken;
+  }
+  const res = await axios.post(`${USPS_API_BASE}/oauth2/v3/token`, {
+    grant_type: 'client_credentials',
+    client_id: process.env.USPS_CLIENT_ID,
+    client_secret: process.env.USPS_CLIENT_SECRET,
+  });
+  cachedToken = res.data.access_token;
+  cachedTokenExpiry = Date.now() + (res.data.expires_in - 60) * 1000;
+  return cachedToken;
+}
 
 async function trackParcel(trackingNumber) {
-  const xml = `<TrackFieldRequest USERID="${process.env.USPS_USERID || 'USERID'}"><Revision>1</Revision><ClientIp>127.0.0.1</ClientIp><SourceId>web</SourceId><TrackID ID="${trackingNumber}"/></TrackFieldRequest>`;
-  const res = await axios.get(USPS_URL, { params: { API: 'TrackV2', XML: xml } });
-  const match = /<StatusSummary>([^<]*)<\/StatusSummary>/.exec(res.data);
-  return match ? match[1] : null;
+  const accessToken = await getAccessToken();
+  const res = await axios.get(
+    `${USPS_API_BASE}/tracking/v3/tracking/${trackingNumber}`,
+    {
+      params: { expand: 'SUMMARY' },
+      headers: { Authorization: `Bearer ${accessToken}` },
+    }
+  );
+  return res.data.statusSummary || null;
 }
 
 module.exports = { trackParcel };
