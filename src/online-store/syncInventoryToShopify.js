@@ -2,7 +2,7 @@
 // Owning team: E-commerce Platform
 const axios = require('axios');
 
-const API_VERSION = '2024-01';
+const API_VERSION = '2026-10';
 
 function shopify() {
   return axios.create({
@@ -14,10 +14,32 @@ function shopify() {
 async function syncInventoryToShopify(item) {
   const api = shopify();
   // Set the online stock level for one store-linked item.
-  await api.post('/inventory_levels/set.json', {
-    location_id: item.locationId,
-    inventory_item_id: item.inventoryItemId,
-    available: item.quantity,
+  await api.post('/graphql.json', {
+    query: `mutation inventorySetQuantities($input: InventorySetQuantitiesInput!) {
+      inventorySetQuantities(input: $input) {
+        inventoryAdjustmentGroup {
+          createdAt
+        }
+        userErrors {
+          field
+          message
+        }
+      }
+    }`,
+    variables: {
+      input: {
+        name: 'available',
+        reason: 'correction',
+        ignoreCompareQuantity: true,
+        quantities: [
+          {
+            inventoryItemId: `gid://shopify/InventoryItem/${item.inventoryItemId}`,
+            locationId: `gid://shopify/Location/${item.locationId}`,
+            quantity: item.quantity,
+          },
+        ],
+      },
+    },
   });
   return true;
 }
