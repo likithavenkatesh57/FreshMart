@@ -1,0 +1,23 @@
+version: 1
+
+updates:
+  - vendor: @googlemaps/google-maps-services-js
+    directory: "/"
+    schedule:
+      interval: daily
+  - vendor: aws-sdk
+    directory: "/"
+    schedule:
+      interval: daily
+  - vendor: shopify
+    directory: "/"
+    schedule:
+      interval: daily
+  - vendor: usps
+    directory: "/"
+    schedule:
+      interval: daily
+  - vendor: microsoft-teams
+    directory: "/"
+    schedule:
+      interval: daily
