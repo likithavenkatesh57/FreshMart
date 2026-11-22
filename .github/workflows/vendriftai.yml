@@ -22,7 +22,7 @@ jobs:
       statuses: read
       actions: read
     steps:
-      - uses: svudgimath/vendriftai-action@aaa76be40717ad58ad53f603ef124930d0dbdbda  # pinned: v1.1.0, same version for all 10 customers
+      - uses: svudgimath/vendriftai-action@7c0a9f9ea9eeb032c1bf87725a8fc076963858c6  # pinned: v1.1.0, same version for all 10 customers
         with:
           anthropic-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
           token: ${{ secrets.VENDRIFTAI_PAT }}
