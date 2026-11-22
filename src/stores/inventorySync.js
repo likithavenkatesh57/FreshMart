@@ -1,14 +1,14 @@
 // Service: Store-to-HQ inventory sync
 // Owning team: Store Systems
-const AWS = require('aws-sdk');
+const { SQSClient, SendMessageCommand } = require('@aws-sdk/client-sqs');
 
 function getClient() {
-  return new AWS.SQS({ region: process.env.AWS_REGION || 'us-east-1' });
+  return new SQSClient({ region: process.env.AWS_REGION || 'us-east-1' });
 }
 
 async function queueInventoryCount(input) {
   const client = getClient();
-  return client.sendMessage({ QueueUrl: process.env.QUEUE_URL, MessageBody: JSON.stringify(input) }).promise();
+  return client.send(new SendMessageCommand({ QueueUrl: process.env.QUEUE_URL, MessageBody: JSON.stringify(input) }));
 }
 
 module.exports = { queueInventoryCount };
